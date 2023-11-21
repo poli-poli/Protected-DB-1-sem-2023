@@ -1,9 +1,3 @@
-package org.example;
-
-
-import javax.persistence.*;
-import java.util.List;
-
 @Entity
 @Table(name = "client")
 public class Client {
@@ -24,53 +18,56 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Invoice> invoices;
 
-    // Геттеры и сеттеры
-    // ...
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    // Пустой конструктор для Hibernate
+    public Client() {
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Имя клиента не может быть пустым.");
+        }
+        this.name = name;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    private void setCountry(String country) {
+        if (country == null || country.isEmpty()) {
+            throw new IllegalArgumentException("Страна клиента не может быть пустой.");
+        }
         this.country = country;
-    }
-
-    public List<Invoice> getInvoices() {
-        return invoices;
-    }
-
-    public void setInvoices(List<Invoice> invoices) {
-        this.invoices = invoices;
     }
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    private void setPhone(String phone) {
+        if (phone == null || phone.isEmpty()) {
+            throw new IllegalArgumentException("Телефон клиента не может быть пустым.");
+        }
         this.phone = phone;
     }
 
-    public Client(String name, String country, String phone) {
-        this.name = name;
-        this.country = country;
-        this.phone = phone;
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    private void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 }
