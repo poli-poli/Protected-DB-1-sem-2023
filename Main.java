@@ -1,6 +1,5 @@
-package org.example;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
+package org.example;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,7 +7,6 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.Date;
 import java.util.List;
-
 
 public class Main {
 
@@ -32,22 +30,27 @@ public class Main {
 
             // Создание и сохранение объектов
 
-
-            Warehouse warehouse = new Warehouse("Warehouse Name", 100);
+            // Пример создания и сохранения склада (Warehouse)
+            Warehouse warehouse = new Warehouse("Название склада", 100);
             warehouseMethod.save(warehouse);
 
-            Store store = new Store("Store Name", "123-456-7890", warehouse);
+            // Пример создания и сохранения магазина (Store)
+            Store store = new Store("Название магазина", "123-456-7890", warehouse);
             storeMethod.save(store);
 
-            Client client = new Client("Client Name", "Client Country", "987-654-3210");
+            // Пример создания и сохранения клиента (Client)
+            Client client = new Client("Имя клиента", "Страна клиента", "987-654-3210");
             clientMethod.save(client);
 
-            Vendor vendor = new Vendor("Vendor Country", 123456, "Vendor Name");
+            // Пример создания и сохранения поставщика (Vendor)
+            Vendor vendor = new Vendor("Страна поставщика", 123456, "Название поставщика");
             vendorMethod.save(vendor);
 
+            // Пример создания и сохранения счета (Invoice)
             Invoice invoice = new Invoice(new Date(), 100.0, store, client);
             invoiceMethod.save(invoice);
 
+            // Пример установки связей между объектами
             store.setWarehouse(warehouse);
             invoice.setStore(store);
             invoice.setClient(client);
@@ -56,11 +59,11 @@ public class Main {
             // Получение и вывод всех объектов определенной сущности
             List<Store> allStores = storeMethod.getAll();
             for (Store s : allStores) {
-                System.out.println("Store Name: " + s.getName());
-                System.out.println("Phone: " + s.getPhone());
+                System.out.println("Название магазина: " + s.getName());
+                System.out.println("Телефон: " + s.getPhone());
             }
 
-            // По аналогии получение и вывод других сущностей
+            // По аналогии можно получать и выводить другие сущности
 
         } finally {
             // Закрываем сессию и фабрику сессий

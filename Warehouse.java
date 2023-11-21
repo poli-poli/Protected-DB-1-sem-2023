@@ -21,7 +21,25 @@ public class Warehouse {
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
-    // Геттеры и сеттеры
+    /**
+     * Конструктор для создания объекта Warehouse.
+     *
+     * @param name     Название склада.
+     * @param quantity Количество товара на складе.
+     * @throws IllegalArgumentException Если название склада равно null или пусто, или количество товара меньше нуля.
+     */
+    public Warehouse(String name, int quantity) {
+        // Добавляем проверку ввода: название склада не должно быть null или пустым,
+        // и количество товара не должно быть меньше нуля.
+        if (name == nullquantity < 0) {
+            throw new IllegalArgumentException("Название склада должно быть указано и количество товара должно быть неотрицательным.");
+        }
+
+        this.name = name;
+        this.quantity = quantity;
+    }
+
+    // Геттеры и сеттеры для остальных полей
     // ...
 
     public Vendor getVendor() {
@@ -37,6 +55,10 @@ public class Warehouse {
     }
 
     public void setName(String name) {
+        // Проверка на пустое название склада.
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Название склада не может быть пустым.");
+        }
         this.name = name;
     }
 
@@ -53,12 +75,10 @@ public class Warehouse {
     }
 
     public void setQuantity(int quantity) {
+        // Проверка на количество товара меньше нуля.
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Количество товара на складе не может быть отрицательным.");
+        }
         this.quantity = quantity;
-    }
-
-    public Warehouse(String name, int quantity) {
-        this.name = name;
-        this.quantity = quantity;
-
     }
 }

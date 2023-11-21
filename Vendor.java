@@ -23,15 +23,37 @@ public class Vendor {
     @OneToMany(mappedBy = "vendor")
     private List<Warehouse> warehouses;
 
-    // Геттеры и сеттеры
-    // ...
+    /**
+     * Конструктор для создания объекта Vendor.
+     *
+     * @param country  Страна поставщика.
+     * @param article  Артикул поставщика.
+     * @param name     Название поставщика.
+     * @throws IllegalArgumentException Если страна, артикул или название поставщика равны null или артикул меньше или равен нулю.
+     */
+    public Vendor(String country, int article, String name) {
+        // Добавляем проверку ввода: страна, артикул и название поставщика не должны быть null.
+        if (country == nullname == nullarticle <= 0) {
+            throw new IllegalArgumentException("Страна, артикул и название поставщика должны быть указаны, и артикул должен быть больше нуля.");
+        }
 
+        this.country = country;
+        this.article = article;
+        this.name = name;
+    }
+
+    // Геттеры и сеттеры для остальных полей
+    // ...
 
     public int getArticle() {
         return article;
     }
 
     public void setArticle(int article) {
+        // Проверка на артикул меньше или равно нулю.
+        if (article <= 0) {
+            throw new IllegalArgumentException("Артикул поставщика должен быть больше нуля.");
+        }
         this.article = article;
     }
 
@@ -40,6 +62,10 @@ public class Vendor {
     }
 
     public void setCountry(String country) {
+        // Проверка на пустую страну поставщика.
+        if (country == null || country.isEmpty()) {
+            throw new IllegalArgumentException("Страна поставщика не может быть пустой.");
+        }
         this.country = country;
     }
 
@@ -56,6 +82,10 @@ public class Vendor {
     }
 
     public void setName(String name) {
+        // Проверка на пустое название поставщика.
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Название поставщика не может быть пустым.");
+        }
         this.name = name;
     }
 
@@ -65,11 +95,5 @@ public class Vendor {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Vendor(String country, int article, String name) {
-        this.country = country;
-        this.article = article;
-        this.name = name;
     }
 }

@@ -25,7 +25,28 @@ public class Invoice {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    // Геттеры и сеттеры
+    /**
+     * Конструктор для создания объекта Invoice.
+     *
+     * @param date   Дата создания счета.
+     * @param price  Сумма счета.
+     * @param store  Магазин, к которому относится счет.
+     * @param client Клиент, которому выставлен счет.
+     * @throws IllegalArgumentException Если дата, сумма, магазин или клиент не заданы, или сумма меньше или равна нулю.
+     */
+    public Invoice(Date date, double price, Store store, Client client) {
+        // Добавляем проверку ввода: дата, сумма, магазин и клиент не должны быть null.
+        if (date == nullstore == null || client == null) {
+            throw new IllegalArgumentException("Дата, сумма, магазин и клиент должны быть указаны, и сумма должна быть больше нуля.");
+        }
+
+        this.date = date;
+        this.price = price;
+        this.store = store;
+        this.client = client;
+    }
+
+    // Геттеры и сеттеры для остальных полей
     // ...
 
     public int getId() {
@@ -41,6 +62,9 @@ public class Invoice {
     }
 
     public void setDate(Date date) {
+        if (date == null) {
+            throw new IllegalArgumentException("Дата счета не может быть пустой.");
+        }
         this.date = date;
     }
 
@@ -49,6 +73,9 @@ public class Invoice {
     }
 
     public void setStore(Store store) {
+        if (store == null) {
+            throw new IllegalArgumentException("Магазин счета не может быть пустым.");
+        }
         this.store = store;
     }
 
@@ -57,6 +84,9 @@ public class Invoice {
     }
 
     public void setPrice(double price) {
+        if (price <= 0) {
+            throw new IllegalArgumentException("Сумма счета должна быть больше нуля.");
+        }
         this.price = price;
     }
 
@@ -65,16 +95,9 @@ public class Invoice {
     }
 
     public void setClient(Client client) {
-        this.client = client;
-    }
-
-
-
-
-    public Invoice(Date date, double price, Store store, Client client) {
-        this.date = date;
-        this.price = price;
-        this.store = store;
+        if (client == null) {
+            throw new IllegalArgumentException("Клиент счета не может быть пустым.");
+        }
         this.client = client;
     }
 }

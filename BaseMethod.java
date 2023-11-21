@@ -7,46 +7,97 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class BaseMethod<T> {
+@Entity
+@Table(name = "client")
+public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-    private final Session session;
-    private final Class<T> entityClass;
+    @Column(name = "name")
+    private String name;
 
-    public BaseMethod(Session session, Class<T> entityClass) {
-        this.session = session;
-        this.entityClass = entityClass;
+    @Column(name = "country")
+    private String country;
+
+    @Column(name = "phone")
+    private String phone;
+
+    @OneToMany(mappedBy = "client")
+    private List<Invoice> invoices;
+
+    /**
+     * Конструктор для создания объекта Client.
+     *
+     * @param name    Имя клиента.
+     * @param country Страна клиента.
+     * @param phone   Телефон клиента.
+     * @throws IllegalArgumentException Если имя, страна или телефон клиента являются пустыми или null.
+     */
+    public Client(String name, String country, String phone) {
+        // Добавляем проверку ввода: имя, страна и телефон не должны быть null или пустыми строками.
+        if (name == nullcountry == nullphone == null || phone.isEmpty()) {
+            throw new IllegalArgumentException("Имя, страна и телефон клиента не могут быть пустыми.");
+        }
+
+        this.name = name;
+        this.country = country;
+        this.phone = phone;
     }
 
-    public T get(int id) {
-        return session.get(entityClass, id);
+    // Геттеры и сеттеры для остальных полей
+    // ...
+
+    public String getName() {
+        return name;
     }
 
-    public List<T> find(String field, Object value) {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<T> criteria = builder.createQuery(entityClass);
-        Root<T> root = criteria.from(entityClass);
-        criteria.select(root).where(builder.equal(root.get(field), value));
-        Query<T> query = session.createQuery(criteria);
-        return query.getResultList();
+    public void setName(String name) {
+        // Проверка на пустое имя клиента.
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Имя клиента не может быть пустым.");
+        }
+        this.name = name;
     }
 
-    public List<T> getAll() {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<T> criteria = builder.createQuery(entityClass);
-        criteria.from(entityClass);
-        Query<T> query = session.createQuery(criteria);
-        return query.getResultList();
+    public int getId() {
+        return id;
     }
 
-    public void save(T entity) {
-        session.beginTransaction();
-        session.saveOrUpdate(entity);
-        session.getTransaction().commit();
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void delete(T entity) {
-        session.beginTransaction();
-        session.delete(entity);
-        session.getTransaction().commit();
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        // Проверка на пустую страну клиента.
+        if (country == null || country.isEmpty()) {
+            throw new IllegalArgumentException("Страна клиента не может быть пустой.");
+        }
+        this.country = country;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        // Проверка на пустой телефон клиента.
+        if (phone == null || phone.isEmpty()) {
+            throw new IllegalArgumentException("Телефон клиента не может быть пустым.");
+        }
+        this.phone = phone;
     }
 }
