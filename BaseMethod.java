@@ -1,86 +1,73 @@
-package org.example;
+@Entity
+@Table(name = "client")
+public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-import org.hibernate.Session;
-import org.hibernate.query.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.List;
+    @Column(name = "name")
+    private String name;
 
-public class BaseMethod<T> {
+    @Column(name = "country")
+    private String country;
 
-    private final Session session;
-    private final Class<T> entityClass;
+    @Column(name = "phone")
+    private String phone;
 
-    /**
-     * Конструктор класса BaseMethod.
-     *
-     * @param session      Сессия Hibernate, используемая для операций с базой данных.
-     * @param entityClass  Тип класса сущности, с которой будет работать этот BaseMethod.
-     */
-    public BaseMethod(Session session, Class<T> entityClass) {
-        this.session = session;
-        this.entityClass = entityClass;
+    @OneToMany(mappedBy = "client")
+    private List<Invoice> invoices;
+
+    // РџСѓСЃС‚РѕР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РґР»СЏ Hibernate
+    public Client() {
     }
 
-    /**
-     * Получить сущность по её уникальному идентификатору (первичному ключу).
-     *
-     * @param id  Первичный ключ сущности, которую нужно получить.
-     * @return    Сущность с указанным первичным ключом или null, если не найдено.
-     */
-    public T get(int id) {
-        return session.get(entityClass, id);
+    public int getId() {
+        return id;
     }
 
-    /**
-     * Найти сущности на основе конкретного поля и его соответствующего значения.
-     *
-     * @param field  Название поля, по которому нужно выполнить фильтрацию.
-     * @param value  Значение, которое должно соответствовать в указанном поле.
-     * @return       Список сущностей, которые соответствуют заданным критериям поля и значения.
-     */
-    public List<T> find(String field, Object value) {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<T> criteria = builder.createQuery(entityClass);
-        Root<T> root = criteria.from(entityClass);
-        criteria.select(root).where(builder.equal(root.get(field), value));
-        Query<T> query = session.createQuery(criteria);
-        return query.getResultList();
+    private void setId(int id) {
+        this.id = id;
     }
 
-    /**
-     * Получить все сущности указанного типа.
-     *
-     * @return  Список всех сущностей указанного типа.
-     */
-    public List<T> getAll() {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<T> criteria = builder.createQuery(entityClass);
-        criteria.from(entityClass);
-        Query<T> query = session.createQuery(criteria);
-        return query.getResultList();
+    public String getName() {
+        return name;
     }
 
-    /**
-     * Сохранить или обновить сущность в базе данных.
-     *
-     * @param entity  Сущность, которую нужно сохранить или обновить.
-     */
-    public void save(T entity) {
-        session.beginTransaction();
-        session.saveOrUpdate(entity);
-        session.getTransaction().commit();
+    private void setName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("РРјСЏ РєР»РёРµРЅС‚Р° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј.");
+        }
+        this.name = name;
     }
 
-    /**
-     * Удалить сущность из базы данных.
-     *
-     * @param entity  Сущность, которую нужно удалить.
-     */
-    public void delete(T entity) {
-        session.beginTransaction();
-        session.delete(entity);
-        session.getTransaction().commit();
+    public String getCountry() {
+        return country;
+    }
+
+    private void setCountry(String country) {
+        if (country == null || country.isEmpty()) {
+            throw new IllegalArgumentException("РЎС‚СЂР°РЅР° РєР»РёРµРЅС‚Р° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚РѕР№.");
+        }
+        this.country = country;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    private void setPhone(String phone) {
+        if (phone == null || phone.isEmpty()) {
+            throw new IllegalArgumentException("РўРµР»РµС„РѕРЅ РєР»РёРµРЅС‚Р° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј.");
+        }
+        this.phone = phone;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    private void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
     }
 }
