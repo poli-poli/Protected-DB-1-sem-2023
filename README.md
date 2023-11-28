@@ -74,26 +74,5 @@ ER-диаграмма БД приведена на Рисунке 1. На дан
 
 
 
-Protected-DB-1-sem-2023/
-  ├── src/
-  │   ├── main/
-  │   │   ├── java/
-  │   │   │   └── org/
-  │   │   │       └── example/
-  │   │   │           ├── Client.java
-  │   │   │           ├── Warehouse.java
-  │   │   │           ├── Store.java
-  │   │   │           ├── Vendor.java
-  │   │   │           └── Invoice.java
-  │   │   └── resources/
-  ├── test/
-  │   ├── java/
-  │   │   └── org/
-  │   │       └── example/
-  │   │           ├── ClientTest.java
-  │   │           ├── WarehouseTest.java
-  │   │           ├── StoreTest.java
-  │   │           ├── VendorTest.java
-  │   │           └── InvoiceTest.java
-  ├── build.gradle
-  └── settings.gradle
+Структура проекта
+![image](https://github.com/poli-poli/Protected-DB-1-sem-2023/assets/85806007/80b550a7-4a90-429b-9cc9-14b13ab95a7b)
