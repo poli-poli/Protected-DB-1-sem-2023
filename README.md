@@ -71,3 +71,29 @@ ER-диаграмма БД приведена на Рисунке 1. На дан
 |     Цена                      |     price        |     Денежный       |     -        |     Обязательное поле                |
 |     Идентификатор магазина    |     store_id     |     Целое число    |     -        |     Внешний ключ                     |
 |     Идентификатор клиента     |     client_id    |     Целое число    |     -        |     Внешний ключ                     |
+
+
+
+Protected-DB-1-sem-2023/
+  ├── src/
+  │   ├── main/
+  │   │   ├── java/
+  │   │   │   └── org/
+  │   │   │       └── example/
+  │   │   │           ├── Client.java
+  │   │   │           ├── Warehouse.java
+  │   │   │           ├── Store.java
+  │   │   │           ├── Vendor.java
+  │   │   │           └── Invoice.java
+  │   │   └── resources/
+  ├── test/
+  │   ├── java/
+  │   │   └── org/
+  │   │       └── example/
+  │   │           ├── ClientTest.java
+  │   │           ├── WarehouseTest.java
+  │   │           ├── StoreTest.java
+  │   │           ├── VendorTest.java
+  │   │           └── InvoiceTest.java
+  ├── build.gradle
+  └── settings.gradle
